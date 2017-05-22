@@ -38,9 +38,9 @@ Dependencies
 Example Playbook
 ----------------
 
-  - hosts: webservers
-    roles:
-      - { role: hxpro.letsencrypt }
+    - hosts: webservers
+      roles:
+        - { role: hxpro.letsencrypt }
 
 License
 -------
