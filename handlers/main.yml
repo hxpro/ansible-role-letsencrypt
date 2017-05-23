@@ -1,0 +1,6 @@
+---
+# handlers file for ansible-role-letsencrypt
+- name: reload nginx
+  systemd:
+    name: nginx
+    state: reloaded

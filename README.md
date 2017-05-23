@@ -19,6 +19,7 @@ le_account_key: '/etc/pki/tls/private/le_account.key'
 le_account_email: 'webmaster@example.com'
 le_shared_key: '/etc/pki/tls/private/le_shared.key'
 le_csr_home: '/etc/pki/tls/csr/'
+le_payload_root: '/var/www/html/le/'
 le_domains:
   - name: 'example.com'
     alt:

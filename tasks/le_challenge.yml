@@ -1,0 +1,33 @@
+---
+- name: Generate Certificate Signing Request
+  openssl_csr:
+    path='{{ le_csr_home }}{{ domain.name }}.csr'
+    privatekey_path='{{ le_shared_key }}'
+    commonName='{{ domain.name }}'
+    subjectAltName='DNS:{{ domain.alt | join(',DNS:') }}'
+
+- name: Generate challenge data
+  letsencrypt:
+    acme_directory: '{{ le_server }}'
+    account_key: '{{ le_account_key }}'
+    csr: '{{ le_csr_home }}{{ domain.name }}.csr'
+    dest: '{{ le_cert_home }}{{ domain.name }}.crt'
+  register: challenge
+
+- name: Copy payload
+  copy:
+    dest="{{ le_payload_root }}{{ challenge.challenge_data[item]['http-01']['resource'] }}"
+    content="{{ challenge.challenge_data[item]['http-01']['resource_value'] }}"
+  with_items: "{{ challenge['challenge_data'] }}"
+  when: challenge.changed
+
+- name: Request cert
+  letsencrypt:
+    acme_directory: '{{ le_server }}'
+    account_key: '{{ le_account_key }}'
+    csr: '{{ le_csr_home }}{{ domain.name }}.csr'
+    dest: '{{ le_cert_home }}{{ domain.name }}.crt'
+    data: "{{ challenge }}"
+  when: challenge.changed
+  ignore_errors: yes
+  notify: reload nginx

@@ -1,0 +1,30 @@
+---
+- name: "Install pyOpenSSL"
+  package:
+    name: "pyOpenSSL"
+
+- name: "Create dirs"
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+  with_items:
+    - "{{ le_cert_home }}"
+    - "{{ le_csr_home }}"
+    - "{{ (le_payload_root | dirname) ~ '/.well-known/acme-challenge' }}"
+    - "{{ le_shared_key | dirname }}"
+    - "{{ le_account_key | dirname }}"
+
+- name: "Create account key"
+  openssl_privatekey:
+    path: "{{ le_account_key }}"
+
+- name: "Create shared key"
+  openssl_privatekey:
+    path: "{{ le_shared_key }}"
+
+- name: "Run Lets Encrypt Challenge"
+  include: "le_challenge.yml"
+  with_items: "{{ le_domains }}"
+  loop_control:
+    loop_var: domain
