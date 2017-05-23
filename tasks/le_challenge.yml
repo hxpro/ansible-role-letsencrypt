@@ -4,7 +4,7 @@
     path='{{ le_csr_home }}{{ domain.name }}.csr'
     privatekey_path='{{ le_shared_key }}'
     commonName='{{ domain.name }}'
-    subjectAltName='DNS:{{ domain.alt | join(',DNS:') }}'
+    subjectAltName="DNS:{{ (domain.alt | join(',DNS:') if domain.alt is defined else domain.name) }}"
 
 - name: Generate challenge data
   letsencrypt:
