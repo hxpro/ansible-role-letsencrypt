@@ -14,4 +14,4 @@ galaxy_info:
   galaxy_tags: []
 
 dependencies:
-  - name: ansible-role-nginx
+  - name: hxpro.nginx
