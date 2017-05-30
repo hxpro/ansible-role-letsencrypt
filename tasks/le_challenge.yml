@@ -11,7 +11,7 @@
     acme_directory: '{{ le_server }}'
     account_key: '{{ le_account_key }}'
     csr: '{{ le_csr_home }}{{ domain.name }}.csr'
-    dest: '{{ le_cert_home }}{{ domain.name }}.crt'
+    dest: '{{ le_cert_home }}_{{ domain.name }}.crt'
   register: challenge
 
 - name: Copy payload
@@ -26,8 +26,15 @@
     acme_directory: '{{ le_server }}'
     account_key: '{{ le_account_key }}'
     csr: '{{ le_csr_home }}{{ domain.name }}.csr'
-    dest: '{{ le_cert_home }}{{ domain.name }}.crt'
+    dest: '{{ le_cert_home }}_{{ domain.name }}.crt'
     data: "{{ challenge }}"
   when: challenge.changed
   ignore_errors: yes
+  notify: reload nginx
+
+- name: Assemble fullchain
+  assemble:
+    src: "{{ le_cert_home }}"
+    regexp: "_{{ domain.name }}.crt|le_inter.pem"
+    dest: "{{ le_cert_home }}{{ domain.name }}.crt"
   notify: reload nginx
