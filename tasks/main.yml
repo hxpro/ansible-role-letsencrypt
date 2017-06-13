@@ -15,6 +15,10 @@
     - "{{ le_shared_key | dirname }}"
     - "{{ le_account_key | dirname }}"
 
+- name: Generate dhparam
+  command: openssl dhparam -out {{ le_dhparam }} 2048
+    creates='{{ le_dhparam }}'
+
 - name: "Download Intermediate Certificate - Let’s Encrypt Authority X3 (IdenTrust cross-signed)"
   get_url:
     url: https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt
