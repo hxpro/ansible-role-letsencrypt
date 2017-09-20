@@ -4,6 +4,9 @@ hxpro.letsencrypt
 Manage LetsEncrypt challenges on a single or multi node infrastructure.
 (this role is under development, do not use it at production environment)
 
+Let's Encrypt submit all certificates to Certificate Transparency logs.
+You can check your domain by: https://crt.sh/?CN=hxpro.cz
+
 Requirements
 ------------
 
