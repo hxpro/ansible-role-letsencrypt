@@ -33,7 +33,7 @@
     path: "{{ le_shared_key }}"
 
 - name: "Run Lets Encrypt Challenge"
-  include: "le_challenge.yml"
+  include_tasks: "le_challenge.yml"
   with_items: "{{ le_domains }}"
   loop_control:
     loop_var: domain
