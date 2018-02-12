@@ -32,6 +32,7 @@ le_domains:
   - name: 'example.net'
     alt:
       - 'www.example.net'
+le_remaining_days: 21
 ```
 
 Dependencies

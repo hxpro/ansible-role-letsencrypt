@@ -12,6 +12,7 @@
     account_key: '{{ le_account_key }}'
     csr: '{{ le_csr_home }}{{ domain.name }}.csr'
     dest: '{{ le_cert_home }}_{{ domain.name }}.crt'
+    remaining_days: "{{ le_remaining_days }}"
   register: challenge
 
 - name: "Copy payload {{ domain.name }}"
@@ -28,6 +29,7 @@
     csr: '{{ le_csr_home }}{{ domain.name }}.csr'
     dest: '{{ le_cert_home }}_{{ domain.name }}.crt'
     data: "{{ challenge }}"
+    remaining_days: "{{ le_remaining_days }}"
   when: challenge.changed
   ignore_errors: yes
   notify: reload nginx
