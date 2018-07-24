@@ -10,6 +10,8 @@
   letsencrypt:
     acme_directory: '{{ le_server }}'
     account_key: '{{ le_account_key }}'
+    terms_agreed: yes
+    acme_version: 2
     csr: '{{ le_csr_home }}{{ domain.name }}.csr'
     dest: '{{ le_cert_home }}_{{ domain.name }}.crt'
     remaining_days: "{{ le_remaining_days }}"
@@ -26,17 +28,12 @@
   letsencrypt:
     acme_directory: '{{ le_server }}'
     account_key: '{{ le_account_key }}'
+    acme_version: 2
     csr: '{{ le_csr_home }}{{ domain.name }}.csr'
     dest: '{{ le_cert_home }}_{{ domain.name }}.crt'
+    fullchain_dest: "{{ le_cert_home }}{{ domain.name }}.crt"
     data: "{{ challenge }}"
     remaining_days: "{{ le_remaining_days }}"
   when: challenge.changed
   ignore_errors: yes
-  notify: reload nginx
-
-- name: "Assemble fullchain {{ domain.name }}"
-  assemble:
-    src: "{{ le_cert_home }}"
-    regexp: "_{{ domain.name }}.crt|le_inter.pem"
-    dest: "{{ le_cert_home }}{{ domain.name }}.crt"
   notify: reload nginx

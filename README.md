@@ -10,7 +10,7 @@ You can check your domain by: https://crt.sh/?CN=hxpro.cz
 Requirements
 ------------
 
-Properly set DNS on all your web nodes
+Properly set DNS for all your web nodes
 
 Role Variables
 --------------
@@ -45,7 +45,8 @@ Example Playbook
 
     - hosts: webservers
       roles:
-        - { role: hxpro.letsencrypt }
+        - role: hxpro.letsencrypt
+          le_account_email: 'webmaster@example.com'
 
 License
 -------
