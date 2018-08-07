@@ -16,7 +16,7 @@ Role Variables
 --------------
 
 ```
-le_server: 'https://acme-staging.api.letsencrypt.org/directory'
+le_server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 le_cert_home: '/etc/pki/tls/certs/'
 le_account_key: '/etc/pki/tls/private/le_account.key'
 le_account_email: 'webmaster@example.com'
@@ -46,6 +46,7 @@ Example Playbook
     - hosts: webservers
       roles:
         - role: hxpro.letsencrypt
+          le_server: 'https://acme-v02.api.letsencrypt.org/directory'
           le_account_email: 'webmaster@example.com'
 
 License
