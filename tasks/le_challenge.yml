@@ -7,7 +7,7 @@
     subjectAltName="DNS:{{ (domain.alt | join(',DNS:') if domain.alt is defined else domain.name) }}"
 
 - name: "Generate challenge data {{ domain.name }}"
-  letsencrypt:
+  acme_certificate:
     acme_directory: '{{ le_server }}'
     account_key: '{{ le_account_key }}'
     terms_agreed: yes
@@ -25,7 +25,7 @@
   when: challenge.changed
 
 - name: "Request cert {{ domain.name }}"
-  letsencrypt:
+  acme_certificate:
     acme_directory: '{{ le_server }}'
     account_key: '{{ le_account_key }}'
     acme_version: 2

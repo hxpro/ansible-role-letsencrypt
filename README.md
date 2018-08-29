@@ -32,6 +32,7 @@ le_domains:
   - name: 'example.net'
     alt:
       - 'www.example.net'
+le_dhparam: '/etc/pki/tls/private/dhparam.pem'
 le_remaining_days: 21
 ```
 
