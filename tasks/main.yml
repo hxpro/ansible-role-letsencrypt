@@ -10,11 +10,10 @@
 
 - name: "pip install pyOpenSSL"
   pip:
-    name: "{{ item }}"
+    name:
+      - pip
+      - pyOpenSSL
     state: latest
-  with_items:
-    - pip
-    - pyOpenSSL
 
 - name: "Create dirs"
   file:
